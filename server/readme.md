@@ -9,4 +9,6 @@
 
 5.  after this i created a new folder named config and inside that folder i created a file named connectDB.js and added the following code to connect to the MongoDB database using mongoose. i also added the MONGODB_URL variable to the .env file to store the connection string for the database. i set the IP address to 0.0.0.0/0 to allow connections from any IP address from the MongoDB Atlas cluster. i also added the connectDb function to the index.js file to connect to the database when the server starts.
 
+6. Then i have to store the new users in the database with authentication functionality. so i created a new folder name models and inside the folder i created a file name user.model.js and added the following code into it. in my model i want to give some free credits to the new users when they sign-up so i added a credits field in the user schema and set its default value to 100. this way every new user will get 100 free credits when they sign-up.
+
 
