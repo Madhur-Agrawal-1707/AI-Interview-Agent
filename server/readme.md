@@ -1,4 +1,4 @@
-## Steps to create a server side of the project:
+# Steps to create a server side of the project:
 
 1. first i created a package.json file using npm init and then i added the follwoing code in the package.json file to run the server using node index.js command. I also added "type": "module" to use ES6 modules in my project.
 
@@ -13,7 +13,7 @@
 
 6. Then i have to store the new users in the database with authentication functionality. so i created a new folder name models and inside the folder i created a file name user.model.js and added the following code into it. in my model i want to give some free credits to the new users when they sign-up so i added a credits field in the user schema and set its default value to 100. this way every new user will get 100 free credits when they sign-up.
 
-# Authentication in server side:
+## Authentication in server side:
 
 7. For authentication, we are using Google OAuth on the client side (via Firebase), but the server handles user creation and JWT token management. Here's how the authentication flow works:
 
@@ -84,5 +84,15 @@
 - `PORT`: Server port (default 6000)
 
 Note: Currently, there are no middleware functions for protecting routes or verifying tokens on incoming requests. The authentication is primarily handled through cookies set during login.
+
+## User Management Features:
+
+8. To protect certain routes and ensure only authenticated users can access them, I created an authentication middleware. I created a new folder named `middlewares` and inside it, I created `isAuth.js`. This middleware verifies the JWT token from the cookies, checks if it's valid, and if so, attaches the userId to the request object for use in controllers. This is essential for securing endpoints that require user authentication, preventing unauthorized access to user-specific data.
+
+9. Next, I created a user controller to handle user-related operations. I created `user.controller.js` in the `controllers` folder with a `getCurrentUser` function. This function retrieves the current user's data from the database using the userId from the request (set by the isAuth middleware). It returns the user object if found, or appropriate error messages. This allows the client to fetch the authenticated user's profile information.
+
+10. To organize the user-related routes, I created `user.route.js` in the `routes` folder. This file sets up an Express router with a GET route for `/current-user`, which uses the isAuth middleware to authenticate the request and then calls the getCurrentUser controller. This provides a clean API endpoint for the client to get the current user's data.
+
+11. Finally, I updated `index.js` to include the new user routes. I imported the userRouter and added `app.use("/api/user", userRouter)` to mount the user routes under the `/api/user` prefix. This integrates the user management functionality into the main server application, making it accessible via the API.
 
 
